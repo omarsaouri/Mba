@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+
+import Header from "./Header";
+import "./css/main.css";
+import Main from "./Main";
 
 function App() {
+  const [data, setData] = useState([]);
+
+  // gets the full schedule
+  const fetchData = async () => {
+    const response = await fetch(
+      "https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2023/league/00_full_schedule.json"
+    );
+    const data = await response.json();
+    setData(data);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header></Header>
+      <Main data={data}></Main>
+    </>
   );
 }
 
