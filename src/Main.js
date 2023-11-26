@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getColors } from "nba-color";
+import NbaCardsContainer from "./NbaCardsContainer";
 
 function Main({ data }) {
   const [tnsArray, setTnsArray] = useState([]);
@@ -70,20 +71,27 @@ function Main({ data }) {
   useEffect(() => {
     getIdTnsArray();
   }, [data]);
+
   return (
-    <ul>
-      {tnsArray?.map((item) => (
-        <li
-          onClick={() => {
-            fetchDataOfTeam(item.id);
-            getTeamColors(item.ta);
-          }}
-          key={item.id}
-        >
-          {item.ta}
-        </li>
-      ))}
-    </ul>
+    <main>
+      <ul>
+        {tnsArray?.map((item) => (
+          <li
+            onClick={() => {
+              fetchDataOfTeam(item.id);
+              getTeamColors(item.ta);
+            }}
+            key={item.id}
+          >
+            {item.ta}
+          </li>
+        ))}
+      </ul>
+      <NbaCardsContainer
+        abrs={tnsArray}
+        fetchDataOfTeam={fetchDataOfTeam}
+      ></NbaCardsContainer>
+    </main>
   );
 }
 
