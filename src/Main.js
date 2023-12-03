@@ -8,6 +8,7 @@ function Main({ data }) {
   const [tnsArray, setTnsArray] = useState([]);
   const [isTeamChoosen, setIsTeamChoosen] = useState(false);
   const [favTeamId, setFavTeamId] = useState();
+  const [favTeamColors, setFavTeamColors] = useState(); // the state i wanna use (it returns an object with colors  )
 
   // array that contains ids of all NBA teams and their associated names
   const getIdTnsArray = async () => {
@@ -41,6 +42,7 @@ function Main({ data }) {
   //gets colors of a choosen team
   const getTeamColors = async (ta) => {
     const teamColors = getColors(ta);
+    setFavTeamColors(teamColors);
   };
 
   useEffect(() => {
