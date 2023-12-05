@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-
+import * as NBAIcons from "react-nba-logos";
 import Header from "./Header";
 import "./css/main.css";
 import Main from "./Main";
 
 function App() {
   const [data, setData] = useState([]);
+  const [isTeamChoosen, setIsTeamChoosen] = useState(false);
+  const [favTeamAbr, setFavTeamAbr] = useState();
 
   // gets the full schedule
   const fetchData = async () => {
@@ -22,8 +24,13 @@ function App() {
 
   return (
     <>
-      <Header></Header>
-      <Main data={data}></Main>
+      <Header isTeamChoosen={isTeamChoosen} favTeamAbr={favTeamAbr}></Header>
+      <Main
+        data={data}
+        isTeamChoosen={isTeamChoosen}
+        setIsTeamChoosen={setIsTeamChoosen}
+        setFavTeamAbr={setFavTeamAbr}
+      ></Main>
     </>
   );
 }

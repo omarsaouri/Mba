@@ -11,17 +11,17 @@
 }
 
 body {
-  background-color: var(--secondary-c);
+  background-color: var(--color-1, var(--secondary-c));
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--color-4, white);
 }
 
 header {
   display: flex;
   justify-content: center;
-  background-color: var(--primary-c);
-  border-bottom: var(--third-c) 1px solid;
+  background-color: var(--color-2, var(--primary-c));
+  border-bottom: var(--color-3, var(--third-c)) 1px solid;
   box-shadow: 0px 10px 12px 2px rgba(0, 0, 0, 0.1);
 }
 

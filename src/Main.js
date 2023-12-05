@@ -4,9 +4,8 @@ import { getColors } from "nba-color";
 import NbaCardsContainer from "./NbaCardsContainer";
 import FavTeamContent from "./FavTeamContent";
 
-function Main({ data }) {
+function Main({ data, isTeamChoosen, setIsTeamChoosen, setFavTeamAbr }) {
   const [tnsArray, setTnsArray] = useState([]);
-  const [isTeamChoosen, setIsTeamChoosen] = useState(false);
   const [favTeamId, setFavTeamId] = useState();
   const [favTeamColors, setFavTeamColors] = useState(); // the state i wanna use (it returns an object with colors  )
 
@@ -37,12 +36,14 @@ function Main({ data }) {
 
     setTnsArray(tnsIdsArray);
   };
-  // gets the data of a choosen team
-
   //gets colors of a choosen team
   const getTeamColors = async (ta) => {
     const teamColors = getColors(ta);
-    setFavTeamColors(teamColors);
+    const teamColorsArray = Object.entries(teamColors);
+    const teamColorsHex = teamColorsArray
+      .map(([_, secondItem]) => secondItem?.hex)
+      .filter((hex) => hex !== undefined && hex !== null);
+    setFavTeamColors(teamColorsHex);
   };
 
   useEffect(() => {
@@ -57,6 +58,8 @@ function Main({ data }) {
           isTeamChoosen={isTeamChoosen}
           setIsTeamChoosen={setIsTeamChoosen}
           setFavTeamId={setFavTeamId}
+          getTeamColors={getTeamColors}
+          setFavTeamAbr={setFavTeamAbr}
         ></NbaCardsContainer>
       )}
       {isTeamChoosen && (
@@ -64,6 +67,7 @@ function Main({ data }) {
           data={data}
           favTeamId={favTeamId}
           isTeamChoosen={isTeamChoosen}
+          favTeamColors={favTeamColors}
         ></FavTeamContent>
       )}
     </main>

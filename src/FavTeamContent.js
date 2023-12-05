@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import DateSelector from "./DateSelector";
 
-const FavTeamContent = ({ data, favTeamId, isTeamChoosen }) => {
+const FavTeamContent = ({ data, favTeamId, isTeamChoosen, favTeamColors }) => {
   const [favTeamData, setFavTeamData] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [todayGame, setTodayGame] = useState();
@@ -32,41 +33,60 @@ const FavTeamContent = ({ data, favTeamId, isTeamChoosen }) => {
     setFavTeamData(tempData);
   };
 
-  const gameByDate = (data) => {
+  const gameByDate = (data, dateExp) => {
     const filteredData = data.filter((item) => {
       const itemDate = new Date(item.gameFullDate);
+      const selectedDate = new Date(dateExp);
+
+      // Compare the date part only, ignoring the time
       return (
-        itemDate.getDate() === currentDate.getDate() &&
-        itemDate.getMonth() === currentDate.getMonth() &&
-        itemDate.getFullYear() === currentDate.getFullYear()
+        itemDate.getFullYear() === selectedDate.getFullYear() &&
+        itemDate.getMonth() === selectedDate.getMonth() &&
+        itemDate.getDate() === selectedDate.getDate()
       );
     });
 
     return filteredData;
   };
 
-  const fetchGameByDate = async (favTeamData) => {
-    const tempGames = await gameByDate(favTeamData);
+  const fetchGameByDate = async (favTeamData, dateExp) => {
+    const tempGames = await gameByDate(favTeamData, dateExp);
     setTodayGame(tempGames);
   };
+
+  useEffect(() => {
+    favTeamColors.forEach((color, index) => {
+      document.documentElement.style.setProperty(`--color-${index + 1}`, color);
+    });
+  }, [favTeamColors]);
 
   useEffect(() => {
     fetchFavTeamData(favTeamId);
   }, [isTeamChoosen]);
 
   useEffect(() => {
-    fetchGameByDate(favTeamData);
+    fetchGameByDate(favTeamData, currentDate);
   }, [favTeamData]);
 
-  useEffect(() => {
-    console.log(favTeamData);
-  }, [favTeamData]);
+  /*useEffect(() => {
+    //console.log(favTeamData);
+    //console.log(favTeamColors);
+  }, [favTeamData]);*/
 
   useEffect(() => {
     console.log(todayGame);
   }, [todayGame]);
 
-  return <h1>hi 2</h1>;
+  return (
+    <>
+      <DateSelector
+        currentDate={currentDate}
+        setCurrentDate={setCurrentDate}
+        fetchGameByDate={fetchGameByDate}
+        favTeamData={favTeamData}
+      ></DateSelector>
+    </>
+  );
 };
 
 export default FavTeamContent;

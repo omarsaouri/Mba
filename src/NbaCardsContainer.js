@@ -8,6 +8,8 @@ const NbaCardsContainer = ({
   isTeamChoosen,
   setIsTeamChoosen,
   setFavTeamId,
+  getTeamColors,
+  setFavTeamAbr,
 }) => {
   const [loading, setLoading] = useState(true);
   const nbaCardVariables = {};
@@ -51,6 +53,8 @@ const NbaCardsContainer = ({
               onClick={() => {
                 setIsTeamChoosen(true);
                 setFavTeamId(item.id);
+                getTeamColors(item.ta);
+                setFavTeamAbr(item.ta);
               }}
             >
               {nbaCardVariables[`nbaCard_${item.ta}`] &&
