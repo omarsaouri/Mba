@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DateSelector from "./DateSelector";
+import GameCard from "./GameCard";
 
 const FavTeamContent = ({ data, favTeamId, isTeamChoosen, favTeamColors }) => {
   const [favTeamData, setFavTeamData] = useState([]);
@@ -68,11 +69,6 @@ const FavTeamContent = ({ data, favTeamId, isTeamChoosen, favTeamColors }) => {
     fetchGameByDate(favTeamData, currentDate);
   }, [favTeamData]);
 
-  /*useEffect(() => {
-    //console.log(favTeamData);
-    //console.log(favTeamColors);
-  }, [favTeamData]);*/
-
   useEffect(() => {
     console.log(todayGame);
   }, [todayGame]);
@@ -81,10 +77,11 @@ const FavTeamContent = ({ data, favTeamId, isTeamChoosen, favTeamColors }) => {
     <>
       <DateSelector
         currentDate={currentDate}
-        setCurrentDate={setCurrentDate}
         fetchGameByDate={fetchGameByDate}
         favTeamData={favTeamData}
+        gameByDate={gameByDate}
       ></DateSelector>
+      {todayGame && <GameCard todayGame={todayGame}></GameCard>}
     </>
   );
 };

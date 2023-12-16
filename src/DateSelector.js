@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 const DateSelector = ({
-  currentDate,
-  setCurrentDate,
   fetchGameByDate,
   favTeamData,
+  currentDate,
+  gameByDate,
 }) => {
-  //const [nextDay, setNextDay] = useState(new Date());
   const [day, setDay] = useState(new Date());
-  //const [prevDay, setPrevDay] = useState(new Date());
-  const monthYearDateFormat = currentDate.toLocaleString("en-US", {
+
+  const monthYearDateFormat = day.toLocaleString("en-US", {
     month: "long",
     year: "numeric",
   });
 
-  const dayDateFormat = currentDate.toLocaleString("en-US", {
+  const dayDateFormat = day.toLocaleString("en-US", {
     weekday: "short",
     day: "numeric",
   });
@@ -22,8 +21,6 @@ const DateSelector = ({
   const goNextDay = () => {
     const newNextDay = new Date(day);
     newNextDay.setDate(day.getDate() + 1);
-
-    // Update nextDay without affecting currentDate
     setDay(newNextDay);
   };
 
@@ -35,30 +32,54 @@ const DateSelector = ({
     setDay(newPrevDay);
   };
 
+  const resetDate = () => {
+    setDay(currentDate);
+  };
+
   useEffect(() => {
     console.log(day);
+    console.log(favTeamData);
     fetchGameByDate(favTeamData, day);
   }, [day]);
 
   return (
-    <section>
+    <section className="date-selector-container">
       <button
+        className="date-selector-btns"
+        onClick={() => {
+          resetDate();
+        }}
+      >
+        <i class="fas fa-undo-alt"></i>
+      </button>
+      <button
+        className="date-selector-btns"
         onClick={() => {
           goPrevDay();
         }}
       >
-        go back
+        <i class="fas fa-chevron-left"></i>
       </button>
-      <div>
+      <div className="date-container">
         <h2>{monthYearDateFormat}</h2>
         <h3>{dayDateFormat}</h3>
       </div>
       <button
+        className="date-selector-btns"
         onClick={() => {
           goNextDay();
         }}
       >
-        go forward
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+      <button
+        className="date-selector-btns"
+        onClick={() => {
+          resetDate();
+        }}
+      >
+        <i class="fas fa-forward"></i>
       </button>
     </section>
   );
