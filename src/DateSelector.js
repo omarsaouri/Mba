@@ -27,8 +27,6 @@ const DateSelector = ({
   const goPrevDay = () => {
     const newPrevDay = new Date(day);
     newPrevDay.setDate(day.getDate() - 1);
-
-    // Update PrevDay without affecting currentDate
     setDay(newPrevDay);
   };
 
@@ -37,8 +35,6 @@ const DateSelector = ({
   };
 
   useEffect(() => {
-    console.log(day);
-    console.log(favTeamData);
     fetchGameByDate(favTeamData, day);
   }, [day]);
 

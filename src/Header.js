@@ -2,6 +2,7 @@ import React from "react";
 import * as NBAIcons from "react-nba-logos";
 
 function Header({ isTeamChoosen, favTeamAbr }) {
+  const Icon = NBAIcons[favTeamAbr];
   return (
     <header>
       {!isTeamChoosen && (
@@ -24,7 +25,7 @@ function Header({ isTeamChoosen, favTeamAbr }) {
           </g>
         </svg>
       )}
-      {isTeamChoosen && React.createElement(NBAIcons[favTeamAbr])}
+      {isTeamChoosen && <Icon />}
     </header>
   );
 }

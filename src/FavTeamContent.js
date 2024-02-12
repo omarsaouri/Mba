@@ -38,8 +38,6 @@ const FavTeamContent = ({ data, favTeamId, isTeamChoosen, favTeamColors }) => {
     const filteredData = data.filter((item) => {
       const itemDate = new Date(item.gameFullDate);
       const selectedDate = new Date(dateExp);
-
-      // Compare the date part only, ignoring the time
       return (
         itemDate.getFullYear() === selectedDate.getFullYear() &&
         itemDate.getMonth() === selectedDate.getMonth() &&
@@ -68,10 +66,6 @@ const FavTeamContent = ({ data, favTeamId, isTeamChoosen, favTeamColors }) => {
   useEffect(() => {
     fetchGameByDate(favTeamData, currentDate);
   }, [favTeamData]);
-
-  useEffect(() => {
-    console.log(todayGame);
-  }, [todayGame]);
 
   return (
     <>

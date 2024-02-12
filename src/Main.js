@@ -37,7 +37,7 @@ function Main({ data, isTeamChoosen, setIsTeamChoosen, setFavTeamAbr }) {
     setTnsArray(tnsIdsArray);
   };
   //gets colors of a choosen team
-  const getTeamColors = async (ta) => {
+  const getTeamColors = (ta) => {
     const teamColors = getColors(ta);
     const teamColorsArray = Object.entries(teamColors);
     const teamColorsHex = teamColorsArray
@@ -52,7 +52,14 @@ function Main({ data, isTeamChoosen, setIsTeamChoosen, setFavTeamAbr }) {
 
   return (
     <main>
-      {!isTeamChoosen && (
+      {isTeamChoosen ? (
+        <FavTeamContent
+          data={data}
+          favTeamId={favTeamId}
+          isTeamChoosen={isTeamChoosen}
+          favTeamColors={favTeamColors}
+        ></FavTeamContent>
+      ) : (
         <NbaCardsContainer
           abrs={tnsArray}
           isTeamChoosen={isTeamChoosen}
@@ -61,14 +68,6 @@ function Main({ data, isTeamChoosen, setIsTeamChoosen, setFavTeamAbr }) {
           getTeamColors={getTeamColors}
           setFavTeamAbr={setFavTeamAbr}
         ></NbaCardsContainer>
-      )}
-      {isTeamChoosen && (
-        <FavTeamContent
-          data={data}
-          favTeamId={favTeamId}
-          isTeamChoosen={isTeamChoosen}
-          favTeamColors={favTeamColors}
-        ></FavTeamContent>
       )}
     </main>
   );
